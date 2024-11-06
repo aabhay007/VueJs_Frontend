@@ -13,7 +13,11 @@
       </thead>
       <tbody>
         <tr v-for="item in items" :key="item.id">
-          <td>{{ item.image }}</td>
+          <!-- Display the image if available, otherwise show a placeholder or message -->
+          <td>
+            <img v-if="item.image_url" :src="item.image_url" alt="Item Image" style="width: 100px; height: 100px;" />
+            <span v-else>No image available</span>
+          </td>
           <td>{{ item.name }}</td>
           <td>{{ item.price }}</td>
           <td>
@@ -34,6 +38,7 @@
     </div>
   </div>
 </template>
+
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";

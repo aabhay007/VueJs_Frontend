@@ -5,9 +5,9 @@
             <p><strong>Name:</strong> {{ item.name }}</p>
             <p><strong>Description:</strong> {{ item.description }}</p>
             <p><strong>Price:</strong> {{ item.price }}</p>
-            <div v-if="item.image">
-                <strong>Image:</strong>
-                <img :src="item.image" alt="Item Image" class="item-image" />
+            <div v-if="item.image_url">
+                <!-- <strong>Image:</strong> -->
+                <img :src="item.image_url" alt="Item Image" class="item-image" />
             </div>
         </div>
         <button type="button" class="sci-fi-button cancel" @click="emitClose">Close</button>
@@ -65,8 +65,8 @@ onMounted(fetchItemData);
 }
 
 .item-image {
-    max-width: 100%;
-    height: auto;
+    max-width: 50%;
+    height: 50%;
     border: 1px solid #00eaff;
     margin-top: 10px;
 }
