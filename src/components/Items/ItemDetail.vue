@@ -2,13 +2,14 @@
     <div class="item-detail-modal">
         <h2>Item Details</h2>
         <div>
-            <p><strong>Name:</strong> {{ item.name }}</p>
-            <p><strong>Description:</strong> {{ item.description }}</p>
-            <p><strong>Price:</strong> {{ item.price }}</p>
             <div v-if="item.image_url">
                 <!-- <strong>Image:</strong> -->
                 <img :src="item.image_url" alt="Item Image" class="item-image" />
             </div>
+            <h2> {{ item.name }}</h2>
+            <span>Price: {{ parseFloat(item.price).toFixed(0) }}💸</span>
+            <div><hr></div>
+            <span> {{ item.description }}</span>
         </div>
         <button type="button" class="sci-fi-button cancel" @click="emitClose">Close</button>
     </div>
@@ -56,7 +57,7 @@ onMounted(fetchItemData);
     color: #fff;
     max-width: 500px;
     margin: auto;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    box-shadow: 0 0 10px rgb(0, 212, 240);
 }
 
 .item-detail-modal p {
@@ -67,7 +68,6 @@ onMounted(fetchItemData);
 .item-image {
     max-width: 50%;
     height: 50%;
-    border: 1px solid #00eaff;
     margin-top: 10px;
 }
 
@@ -80,4 +80,5 @@ onMounted(fetchItemData);
     cursor: pointer;
     margin-top: 20px;
 }
+
 </style>
