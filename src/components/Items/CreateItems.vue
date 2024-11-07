@@ -94,7 +94,7 @@ input,textarea{
     width: 100%;
     padding: 8px;
     margin-bottom: 15px;
-    border: 1px solid #00eaff;
+    border: 1px solid #423d6d;
     border-radius: 4px;
     background-color: #222;
     color: #fff;
