@@ -1,35 +1,26 @@
 <template>
   <div>
-    <h3>Items Table</h3>
+    <h3>Items Gallery</h3>
     <button class="sci-fi-button" @click="openCreateModal()">Create Item</button>
-    <table>
-      <thead>
-        <tr>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in items" :key="item.id">
-          <!-- Display the image if available, otherwise show a placeholder or message -->
-          <td>
-            <img v-if="item.image_url" :src="item.image_url" alt="Item Image" style="width: 100px; height: 100px;" />
-            <span v-else>No image available</span>
-          </td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.price }}</td>
-          <td>
+    <div class="items-grid">
+      <div v-for="item in items" :key="item.id" class="item-card">
+        <div class="item-image">
+          <img v-if="item.image_url" :src="item.image_url" alt="Item Image" />
+          <span v-else>No image available</span>
+        </div>
+        <div class="item-info">
+          <h4>{{ item.name }}</h4>
+          <p>{{ parseFloat(item.price).toFixed(0) }}💸</p>
+          <div class="action-buttons">
             <button class="sci-fi-button" @click="openDetailModal(item.id)">View</button>
             <button class="sci-fi-button success" @click="openEditModal(item.id)">Edit</button>
             <button class="sci-fi-button cancel" @click="openDeleteModal(item.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <!-- Modals for Edit, Detail, and Delete Confirmation, wrapped with modal styles -->
+    <!-- Modals for Edit, Detail, and Delete Confirmation -->
     <div v-if="isCreating || isEditing || isViewing || isDeleting" class="modal-overlay" @click.self="closeModals">
       <CreateItem v-if="isCreating" @close="closeModals" />
       <EditItem v-if="isEditing" :itemId="selectedItemId" @close="closeModals" />
@@ -38,7 +29,6 @@
     </div>
   </div>
 </template>
-
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
@@ -193,4 +183,60 @@ th {
   box-shadow: 0 0 15px rgba(100, 100, 255, 0.5);
   text-align: center;
 }
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.items-grid {
+    display: flex;
+    justify-content: start;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+.item-card {
+  /* background-color: #1a1a1a; */
+  background-color: #3e3e67;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 210, 255, 0.5);
+}
+
+.item-image img {
+  max-height: 150px;
+}
+
+.item-info {
+  margin-top: 12px;
+}
+
+.item-info h4 {
+  color: #ffffff;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.item-info p {
+  color: #00d2ff;
+  font-weight: bold;
+}
+
+.action-buttons {
+  margin-top: 10px;
+}
+
+.sci-fi-button {
+  margin: 4px;
+  padding: 8px 16px;
+}
+
 </style>
