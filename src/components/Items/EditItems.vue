@@ -50,7 +50,7 @@
     name: '',
     description: '',
     price: 0,
-    image: null as string | null,
+    image: '',
   });
   
   // Fetch item data for editing

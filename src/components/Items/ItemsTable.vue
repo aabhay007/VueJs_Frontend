@@ -57,12 +57,12 @@ export default defineComponent({
   },
   setup() {
     const store = useItemsStore();
-    const items = ref([]);
+    const items = ref();
     const isCreating = ref(false);
     const isEditing = ref(false);
     const isViewing = ref(false);
     const isDeleting = ref(false);
-    const selectedItemId = ref<number | null>(null);
+    const selectedItemId = ref(0);
 
     const fetchItems = async () => {
       await store.fetchItems();
@@ -93,13 +93,13 @@ export default defineComponent({
       isViewing.value = false;
       isEditing.value = false;
       isDeleting.value = false;
-      selectedItemId.value = null;
+      selectedItemId.value = 0;
       fetchItems();
     };
 
     const closeDeleteModal = () => {
       isDeleting.value = false;
-      selectedItemId.value = null;
+      selectedItemId.value = 0;
     };
 
     const confirmDelete = async () => {

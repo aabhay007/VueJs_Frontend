@@ -27,11 +27,11 @@ const emit = defineEmits<{ (e: 'close'): void }>();
 
 // Store
 const store = useItemsStore();
-const item = ref({ name: '', description: '', price: 0, image: null as string | null });
+const item = ref({ name: '', description: '', price: '', image_url: null as string | null });
 
 // Fetch item data for viewing
 const fetchItemData = async () => {
-    const fetchedItem = await store.getItemById(props.itemId);
+    const fetchedItem = await store.getItemDetails(props.itemId);
     if (fetchedItem) {
         item.value = { ...fetchedItem };
     } else {

@@ -38,10 +38,11 @@ import { useItemsStore } from '../../store/itemsStore';
 
 const store = useItemsStore();
 const newItem = ref({
+    id:0,
     name: '',
     description: '',
     price: 0,
-    image: null,
+    image: '',
 });
 
 // Function to handle image upload

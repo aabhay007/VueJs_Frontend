@@ -7,7 +7,14 @@ interface Item {
   name: string;
   description: string;
   price: number;
-  image?: string; // Add this if you want to handle images
+  image: string; // Add this if you want to handle images
+}
+interface ItemResponse{
+  id: number;
+  name: string;
+  description: string;
+  price: '';
+  image_url: string;
 }
 
 export const useItemsStore = defineStore('items', {
@@ -46,6 +53,15 @@ export const useItemsStore = defineStore('items', {
     async getItemById(id: number) {
       try {
         const response = await axios.get<Item>(`http://127.0.0.1:8000/api/item-detail/${id}/`);
+        return response.data;
+      } catch (error) {
+        console.error('Failed to fetch item:', error);
+        return null;
+      }
+    },
+    async getItemDetails(id: number) {
+      try {
+        const response = await axios.get<ItemResponse>(`http://127.0.0.1:8000/api/item-detail/${id}/`);
         return response.data;
       } catch (error) {
         console.error('Failed to fetch item:', error);
