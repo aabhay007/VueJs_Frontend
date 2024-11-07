@@ -1,28 +1,13 @@
 <template>
   <div>
-    <!-- <h2 v-if="authStore.user">Welcome, {{ authStore.user.username }}</h2>
-    <h2 v-else>Loading...</h2> -->
-    <h2>Welcome</h2>
+    <Navbar/>
     <ItemsTableVue />
-    <button class="sci-fi-button" @click="showCreateItem = true">Create Item</button>
-    <button class="sci-fi-button" @click="authStore.logout">Logout</button>
-
-    <!-- Conditionally render the CreateItem component -->
-    <CreateItemVue v-if="showCreateItem" @close="showCreateItem = false" />
   </div>
 </template>
 
 <script setup lang="ts">
 import ItemsTableVue from '../../components/Items/ItemsTable.vue';
-import CreateItemVue from '../../components/Items/CreateItems.vue';
-import { ref, onMounted} from 'vue';
-import { useAuthStore } from '../../store/useAuthStore';
-
-const authStore = useAuthStore();
-//  console.log(authStore);
-
-const showCreateItem = ref(false); // Control CreateItem visibility
-
+import Navbar from '../../components/navbar/Navbar.vue';
 </script>
 
 <style scoped>

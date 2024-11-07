@@ -1,15 +1,17 @@
 <template>
   <div>
-    <h3>Items Gallery</h3>
-    <button class="sci-fi-button" @click="openCreateModal()">Create Item</button>
+    <div class="top-bar">
+      <h2>Items Gallery</h2>
+      <button class="sci-fi-button topbar-button" @click="openCreateModal()">Create Item</button>
+    </div>
     <div class="items-grid">
       <div v-for="item in items" :key="item.id" class="item-card">
         <div class="item-image">
-          <img v-if="item.image_url" :src="item.image_url" alt="Item Image" />
+          <img loading="eager" v-if="item.image_url" :src="item.image_url" alt="Item Image" />
           <span v-else>No image available</span>
         </div>
         <div class="item-info">
-          <h4>{{ item.name }}</h4>
+          <h3>{{ item.name }}</h3>
           <p>{{ parseFloat(item.price).toFixed(0) }}💸</p>
           <div class="action-buttons">
             <button class="sci-fi-button" @click="openDetailModal(item.id)">View</button>
@@ -135,6 +137,14 @@ th {
   background-color: #000;
   color: #fff;
 }
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.topbar-button{
+  height: fit-content;
+}
 .sci-fi-button {
   margin: 6px;
   padding: 10px 20px;
@@ -198,12 +208,14 @@ th {
 }
 .item-card {
   /* background-color: #1a1a1a; */
-  background-color: #3e3e67;
+  background-color: #000;
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 265px;
+  height: 320px;
 }
 
 .item-card:hover {

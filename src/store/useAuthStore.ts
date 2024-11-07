@@ -1,6 +1,7 @@
 // src/store/useAuthStore.ts
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import router from '../router';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -43,11 +44,15 @@ export const useAuthStore = defineStore('auth', {
     },
 
     logout() {
-      // this.token = '';
       this.user = null;
-      // this.isAuthenticated = false;
-      // localStorage.removeItem('token');
-      window.location.reload();
-    },
+    
+      // Clear csrftoken cookie specifically
+      document.cookie = "csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    
+      router.push('/');
+      // window.location.reload();
+    }
+    
+    
   },
 });
