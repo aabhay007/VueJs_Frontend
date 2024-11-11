@@ -14,11 +14,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useAuthStore } from '../../store/useAuthStore';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 import toast from '../../services/toaster/toast';
 
 const authStore = useAuthStore();
-const router = useRouter();
+// const router = useRouter();
 
 const username = ref('');
 const password = ref('');
@@ -27,7 +27,7 @@ const error = ref('');
 const handleLogin = async () => {
   try {
     await authStore.login(username.value, password.value);
-    router.push('/home');
+    // router.push('/home');
     toast.info("Logged In Sucessfully!");
     } catch (err: any) {
     toast.info("Invalid Credentials!");

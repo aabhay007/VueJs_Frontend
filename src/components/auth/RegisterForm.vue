@@ -2,7 +2,7 @@
   <div class="register-container">
     <form @submit.prevent="handleRegister" class="register-form">
       <h2 class="form-title">Register</h2>
-      <input v-model="username" type="text" placeholder="UserName" required class="sci-fi-input" />
+      <input v-model="name" type="text" placeholder="UserName" required class="sci-fi-input" />
       <input v-model="email" type="email" placeholder="Email" required class="sci-fi-input" />
       <input v-model="password" type="password" placeholder="Password" required class="sci-fi-input" />
       <button type="submit" class="sci-fi-button">Register</button>
@@ -21,14 +21,14 @@ import toast from '../../services/toaster/toast';
 const authStore = useAuthStore();
 const router = useRouter();
 
-const username = ref('');
+const name = ref('');
 const email = ref('');
 const password = ref('');
 const error = ref('');
 
 const handleRegister = async () => {
   try {
-    await authStore.register(username.value, email.value, password.value);
+    await authStore.register(name.value, email.value, password.value);
     router.push('/login');
     toast.info("Registeration Successful!");
   } catch (err: any) {

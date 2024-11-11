@@ -8,6 +8,9 @@
 <script setup lang="ts">
 import ItemsTableVue from '../../components/Items/ItemsTable.vue';
 import Navbar from '../../components/navbar/Navbar.vue';
+
+const token = document.cookie.length;
+console.log(token);
 </script>
 
 <style scoped>
