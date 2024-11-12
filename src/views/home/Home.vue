@@ -8,8 +8,9 @@
 <script setup lang="ts">
 import ItemsTableVue from '../../components/Items/ItemsTable.vue';
 import Navbar from '../../components/navbar/Navbar.vue';
+import cookies from 'js-cookie'
 
-const token = document.cookie.length;
+const token = cookies.get('csrftoken');
 console.log(token);
 </script>
 
