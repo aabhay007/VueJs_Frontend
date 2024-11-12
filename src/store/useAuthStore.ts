@@ -1,24 +1,26 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
 import router from '../router';
 import axiosInstance from '../services/jwt/interceptor';
+import Cookies from 'js-cookie';
 
 export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    user: null as { id: string; username: string } | null,
-  }),
+ 
 
   actions: {
     // Login action
     async login(username: string, password: string) {
       try {
-        // Send login request (backend will set cookies)
-        await axios.post('http://127.0.0.1:8000/api/login/', { username, password },{ withCredentials: true });
+        // Send login request and receive tokens
+        const response = await axiosInstance.post('login/', { username, password });
+
+        // Store tokens in cookies
+        Cookies.set('accessToken', response.data.access_token, { expires: 3600 });  // expires in 1 hour
+        Cookies.set('refreshToken', response.data.refresh_token, { expires: 604800 });  // expires in 7 days
 
         // After login, fetch user data
-       // await this.getUser(); // Get the logged-in user's data
+        await this.getUser();
 
-        // Redirect to a protected page (optional)
+        // Redirect to a protected page
         router.push('/home');
       } catch (error) {
         throw new Error('Invalid credentials');
@@ -28,7 +30,7 @@ export const useAuthStore = defineStore('auth', {
     // Register action
     async register(name: string, email: string, password: string) {
       try {
-        await axios.post('http://127.0.0.1:8000/api/register/', { username: name, email, password });
+        await axiosInstance.post('register/', { username: name, email, password });
       } catch (error) {
         throw new Error('Registration failed');
       }
@@ -37,10 +39,9 @@ export const useAuthStore = defineStore('auth', {
     // Fetch authenticated user data
     async getUser() {
       try {
-        const response = await axiosInstance.get('http://127.0.0.1:8000/api/user/', {
-          withCredentials: true,  // Ensure cookies are sent with the request
-        });
-        this.user = response.data;  // Store user data in state
+        // const accessToken = Cookies.get('accessToken');
+        const response = await axiosInstance.get('user/');
+        localStorage.setItem('name',response.data.first_name);
       } catch (error) {
         console.error('Failed to fetch user:', error);
       }
@@ -48,14 +49,23 @@ export const useAuthStore = defineStore('auth', {
 
     // Logout action
     logout() {
-      // Redirect to the home page
+      Cookies.remove('accessToken');
+      Cookies.remove('refreshToken');
       router.push('/');
-      
-      // Optionally, inform the backend to delete cookies (if needed)
-      axios.post('http://127.0.0.1:8000/api/logout/', {}, { withCredentials: true });
-      
-      // Clear user state
-      this.user = null;
+    },
+
+    // Token refresh action
+    async refreshAccessToken() {
+      try {
+        const refreshToken = Cookies.get('refreshToken');
+        const response = await axiosInstance.post('refresh/', {
+          refresh: refreshToken
+        });
+        Cookies.set('accessToken', response.data.access_token, { expires: 3600 }); // Reset expiry to 1 hour
+      } catch (error) {
+        console.error('Failed to refresh access token:', error);
+        this.logout();
+      }
     }
-  },
+  }
 });
