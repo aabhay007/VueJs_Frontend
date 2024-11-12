@@ -30,7 +30,7 @@ export const useAuthStore = defineStore('auth', {
     // Register action
     async register(name: string, email: string, password: string) {
       try {
-        await axiosInstance.post('register/', { username: name, email, password });
+        await axiosInstance.post('register/', { name: name, email, password });
       } catch (error) {
         throw new Error('Registration failed');
       }
@@ -41,6 +41,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         // const accessToken = Cookies.get('accessToken');
         const response = await axiosInstance.get('user/');
+        console.log(response.data);
         localStorage.setItem('name',response.data.first_name);
       } catch (error) {
         console.error('Failed to fetch user:', error);

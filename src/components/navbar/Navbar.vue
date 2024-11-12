@@ -1,6 +1,6 @@
 <template>
     <nav class="sci-fi-navbar">
-        <h1 class="logo">Whizzlet</h1>
+        <h1 class="logo">wizstore</h1>
         <ul class="nav-links">
             <li><a href="/home">Home</a></li>
             <li><a href="/about">About</a></li>
