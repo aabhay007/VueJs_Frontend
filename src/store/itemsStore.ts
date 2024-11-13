@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
 import toast from '../services/toaster/toast';
+import axiosInstance from '../services/jwt/interceptor';
 
 interface Item {
   id: number;
@@ -24,7 +24,7 @@ export const useItemsStore = defineStore('items', {
   actions: {
     async fetchItems() {
       try {
-        const response = await axios.get<Item[]>('http://127.0.0.1:8000/api/items/');
+        const response = await axiosInstance.get<Item[]>('http://127.0.0.1:8000/api/items/');
         this.items = response.data;
       } catch (error) {
         console.error('Failed to fetch items:', error);
@@ -32,7 +32,7 @@ export const useItemsStore = defineStore('items', {
     },
     async deleteItem(id: number) {
       try {
-        await axios.delete(`http://127.0.0.1:8000/api/delete-item/${id}/`);
+        await axiosInstance.delete(`http://127.0.0.1:8000/api/delete-item/${id}/`);
         this.items = this.items.filter(item => item.id !== id);
         toast.info("Item deleted successfully!");
       } catch (error) {
@@ -42,7 +42,7 @@ export const useItemsStore = defineStore('items', {
     },
     async createItem(newItem: Item) {
       try {
-        const response = await axios.post<Item>('http://127.0.0.1:8000/api/add-item/', newItem);
+        const response = await axiosInstance.post<Item>('http://127.0.0.1:8000/api/add-item/', newItem);
         this.items.push(response.data); // Add the new item to the state
         toast.info("New Item Created Successfully!");
       } catch (error) {
@@ -52,7 +52,7 @@ export const useItemsStore = defineStore('items', {
     },
     async getItemById(id: number) {
       try {
-        const response = await axios.get<Item>(`http://127.0.0.1:8000/api/item-detail/${id}/`);
+        const response = await axiosInstance.get<Item>(`http://127.0.0.1:8000/api/item-detail/${id}/`);
         return response.data;
       } catch (error) {
         console.error('Failed to fetch item:', error);
@@ -61,7 +61,7 @@ export const useItemsStore = defineStore('items', {
     },
     async getItemDetails(id: number) {
       try {
-        const response = await axios.get<ItemResponse>(`http://127.0.0.1:8000/api/item-detail/${id}/`);
+        const response = await axiosInstance.get<ItemResponse>(`http://127.0.0.1:8000/api/item-detail/${id}/`);
         return response.data;
       } catch (error) {
         console.error('Failed to fetch item:', error);
@@ -70,7 +70,7 @@ export const useItemsStore = defineStore('items', {
     },
     async updateItem(item: Item) {
       try {
-        const response = await axios.put(`http://127.0.0.1:8000/api/update-item/${item.id}/`, item);
+        const response = await axiosInstance.put(`http://127.0.0.1:8000/api/update-item/${item.id}/`, item);
         const index = this.items.findIndex(i => i.id === item.id);
         if (index !== -1) {
           this.items[index] = response.data; // Update the item in the list
