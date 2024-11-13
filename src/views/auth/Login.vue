@@ -1,13 +1,10 @@
 <template>
-    <LoginForm/>
-  </template>
-  
-  <script setup lang="ts">
+  <LoginForm />
+</template>
+
+<script setup lang="ts">
 import LoginForm from '../../components/auth/LoginForm.vue';
 
-  </script>
-  
-  <style scoped>
+</script>
 
-  </style>
-  
+<style scoped></style>

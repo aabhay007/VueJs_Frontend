@@ -2,6 +2,7 @@
   <div>
     <div class="top-bar">
       <h2>Items Gallery</h2>
+      <input type="text" v-model="searchParam" />
       <button v-if="isAdmin" class="sci-fi-button topbar-button" @click="openCreateModal()">Create Item</button>
     </div>
     <div class="items-grid">
@@ -37,8 +38,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, watch } from "vue";
 import { useItemsStore } from "../../store/itemsStore";
+// import debounce from "lodash";
 import CreateItem from '../../components/Items/CreateItems.vue';
 import EditItem from "./EditItems.vue";
 import ItemDetail from "./ItemDetail.vue";
@@ -60,12 +62,17 @@ export default defineComponent({
     const isViewing = ref(false);
     const isDeleting = ref(false);
     const selectedItemId = ref(0);
-    const isAdmin=isSuperUser();
+    const isAdmin = isSuperUser();
+    const searchParam = ref('');
 
     const fetchItems = async () => {
-      await store.fetchItems();
+      await store.fetchItems(searchParam.value);
       items.value = store.items;
     };
+
+    watch(searchParam, () => {
+      fetchItems();
+    });
 
     const openDetailModal = (id: number) => {
       selectedItemId.value = id;
@@ -125,33 +132,39 @@ export default defineComponent({
       isDeleting,
       selectedItemId,
       isAdmin,
+      searchParam,
     };
-  },
+  }
 });
 </script>
 
 <style scoped>
-
 table {
   width: 100%;
   border-collapse: collapse;
 }
-th, td {
+
+th,
+td {
   border: 1px solid #ddd;
   padding: 8px;
-}                                    
+}
+
 th {
   background-color: #000;
   color: #fff;
 }
+
 .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.topbar-button{
+
+.topbar-button {
   height: fit-content;
 }
+
 .sci-fi-button {
   margin: 6px;
   padding: 10px 20px;
@@ -164,20 +177,25 @@ th {
   transition: background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 0 15px rgba(100, 100, 255, 0.5);
 }
+
 .sci-fi-button:hover {
   background: linear-gradient(45deg, #3a0ca3, #00d2ff);
   box-shadow: 0 0 15px #00d2ff, 0 0 25px rgba(0, 210, 255, 0.7);
 }
+
 .sci-fi-button.cart:hover {
   background: linear-gradient(45deg, #fc4a03, #ce6007);
   box-shadow: 0 0 15px #f85d03, 0 0 25px rgba(255, 72, 0, 0.7);
 }
+
 .sci-fi-button.cancel {
   background: linear-gradient(45deg, #ff4b2b, #ff416c);
 }
+
 .sci-fi-button.success {
   background: linear-gradient(45deg, #04700d, #1fdd19);
 }
+
 .sci-fi-button.cart {
   background: linear-gradient(45deg, #f76f00, #e2a702);
 }
@@ -196,7 +214,9 @@ th {
   z-index: 1000;
 }
 
-.edit-item-modal, .detail-modal, .confirmation-modal {
+.edit-item-modal,
+.detail-modal,
+.confirmation-modal {
   background-color: #111;
   padding: 20px;
   border-radius: 8px;
@@ -207,19 +227,22 @@ th {
   box-shadow: 0 0 15px rgba(100, 100, 255, 0.5);
   text-align: center;
 }
+
 .items-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
   margin-top: 20px;
 }
+
 .items-grid {
-    display: flex;
-    justify-content: start;
-    max-width: 100%;
-    flex-wrap: wrap;
-    gap: 30px;
+  display: flex;
+  justify-content: start;
+  max-width: 100%;
+  flex-wrap: wrap;
+  gap: 30px;
 }
+
 .item-card {
   /* background-color: #1a1a1a; */
   background-color: #000;
@@ -264,5 +287,4 @@ th {
   margin: 4px;
   padding: 8px 16px;
 }
-
 </style>

@@ -22,9 +22,9 @@ export const useItemsStore = defineStore('items', {
     items: [] as Item[],
   }),
   actions: {
-    async fetchItems() {
+    async fetchItems(searchParam: string){
       try {
-        const response = await axiosInstance.get<Item[]>('items/');
+        const response = await axiosInstance.get<Item[]>(`items/?search=${searchParam}`);
         this.items = response.data;
       } catch (error) {
         console.error('Failed to fetch items:', error);
