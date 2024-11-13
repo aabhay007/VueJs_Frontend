@@ -1,7 +1,13 @@
 <template>
     <nav class="sci-fi-navbar">
         <h1 class="logo">wizstore</h1>
-        <ul class="nav-links">
+        <ul v-if="isAdmin" class="nav-links">
+            <li><a href="/home">Admin</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+        <ul v-else class="nav-links">
             <li><a href="/home">Home</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="/services">Services</a></li>
@@ -14,15 +20,17 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useAuthStore } from "../../store/useAuthStore";
-
+import isSuperUser from "../../services/jwt/checkUserRole";
 
 export default defineComponent({
     name: "SciFiNavbar",
 
     setup() {
         const authStore = useAuthStore();
+        const isAdmin = isSuperUser();
         return {
-            authStore
+            authStore,
+            isAdmin,
         };
     },
 });
