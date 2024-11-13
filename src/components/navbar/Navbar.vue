@@ -13,7 +13,8 @@
             <li><a href="/services">Services</a></li>
             <li><a href="/contact">Contact</a></li>
         </ul>
-        <button class="sci-fi-button logout-btn" @click="authStore.logout">Logout</button>
+        <button v-if="isLoggedIn" class="sci-fi-button logout-btn" @click="authStore.logout">Logout</button>
+        <button v-else class="sci-fi-button login-btn" @click="goToLogin()">Login</button>
     </nav>
 </template>
 
@@ -21,6 +22,8 @@
 import { defineComponent } from "vue";
 import { useAuthStore } from "../../store/useAuthStore";
 import isSuperUser from "../../services/jwt/checkUserRole";
+import Cookies from "js-cookie";
+import router from "../../router";
 
 export default defineComponent({
     name: "SciFiNavbar",
@@ -28,9 +31,13 @@ export default defineComponent({
     setup() {
         const authStore = useAuthStore();
         const isAdmin = isSuperUser();
+        const isLoggedIn = Cookies.get("accessToken");
+        const goToLogin =()=>{ router.push('/login');}
         return {
             authStore,
             isAdmin,
+            isLoggedIn,
+            goToLogin
         };
     },
 });
@@ -117,5 +124,21 @@ export default defineComponent({
 .sci-fi-button.logout-btn:hover {
     background: linear-gradient(45deg, #ff416c, #ff4b2b);
     box-shadow: 0 0 15px #ff416c, 0 0 25px rgba(255, 65, 108, 0.7);
+}
+.sci-fi-button.login-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(45deg, #00d2ff, #3a0ca3);
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 15px rgba(13, 221, 248, 0.7);
+}
+
+.sci-fi-button.login-btn:hover {
+    background: linear-gradient(45deg, #00d2ff, #3a0ca3);
+    box-shadow: 0 0 15px #00d2ff, 0 0 25px rgba(13, 221, 248, 0.7);
 }
 </style>

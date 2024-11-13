@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import ItemsTableVue from '../../components/Items/ItemsTable.vue';
+import ItemsTableVue from '../../components/Items/ItemsGrid.vue';
 import Navbar from '../../components/navbar/Navbar.vue';
 
 </script>

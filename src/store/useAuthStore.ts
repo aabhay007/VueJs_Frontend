@@ -10,18 +10,11 @@ export const useAuthStore = defineStore('auth', {
     // Login action
     async login(username: string, password: string) {
       try {
-        // Send login request and receive tokens
         const response = await axiosInstance.post('login/', { username, password });
-
-        // Store tokens in cookies
         Cookies.set('accessToken', response.data.access_token, { expires: 3600 });  // expires in 1 hour
         Cookies.set('refreshToken', response.data.refresh_token, { expires: 604800 });  // expires in 7 days
-
-        // After login, fetch user data
         await this.getUser();
-
-        // Redirect to a protected page
-        router.push('/home');
+        router.push('/');
       } catch (error) {
         throw new Error('Invalid credentials');
       }
@@ -39,9 +32,7 @@ export const useAuthStore = defineStore('auth', {
     // Fetch authenticated user data
     async getUser() {
       try {
-        // const accessToken = Cookies.get('accessToken');
         const response = await axiosInstance.get('user/');
-        console.log(response.data);
         localStorage.setItem('name',response.data.first_name);
       } catch (error) {
         console.error('Failed to fetch user:', error);
@@ -52,7 +43,7 @@ export const useAuthStore = defineStore('auth', {
     logout() {
       Cookies.remove('accessToken');
       Cookies.remove('refreshToken');
-      router.push('/');
+      router.go(0);
     },
 
     // Token refresh action

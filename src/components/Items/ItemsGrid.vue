@@ -2,7 +2,7 @@
   <div>
     <div class="top-bar">
       <h2>Items Gallery</h2>
-      <button class="sci-fi-button topbar-button" @click="openCreateModal()">Create Item</button>
+      <button v-if="isAdmin" class="sci-fi-button topbar-button" @click="openCreateModal()">Create Item</button>
     </div>
     <div class="items-grid">
       <div v-for="item in items" :key="item.id" class="item-card">
@@ -13,10 +13,14 @@
         <div class="item-info">
           <h3>{{ item.name }}</h3>
           <p>{{ parseFloat(item.price).toFixed(0) }}💸</p>
-          <div class="action-buttons">
+          <div v-if="isAdmin" class="action-buttons">
             <button class="sci-fi-button" @click="openDetailModal(item.id)">View</button>
             <button class="sci-fi-button success" @click="openEditModal(item.id)">Edit</button>
             <button class="sci-fi-button cancel" @click="openDeleteModal(item.id)">Delete</button>
+          </div>
+          <div v-else class="action-buttons">
+            <button class="sci-fi-button" @click="openDetailModal(item.id)">View</button>
+            <button class="sci-fi-button cart" @click="openDetailModal(item.id)">Add To Cart</button>
           </div>
         </div>
       </div>
@@ -39,6 +43,7 @@ import CreateItem from '../../components/Items/CreateItems.vue';
 import EditItem from "./EditItems.vue";
 import ItemDetail from "./ItemDetail.vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
+import isSuperUser from "../../services/jwt/checkUserRole";
 
 export default defineComponent({
   components: {
@@ -55,6 +60,7 @@ export default defineComponent({
     const isViewing = ref(false);
     const isDeleting = ref(false);
     const selectedItemId = ref(0);
+    const isAdmin=isSuperUser();
 
     const fetchItems = async () => {
       await store.fetchItems();
@@ -118,6 +124,7 @@ export default defineComponent({
       isViewing,
       isDeleting,
       selectedItemId,
+      isAdmin,
     };
   },
 });
@@ -161,11 +168,18 @@ th {
   background: linear-gradient(45deg, #3a0ca3, #00d2ff);
   box-shadow: 0 0 15px #00d2ff, 0 0 25px rgba(0, 210, 255, 0.7);
 }
+.sci-fi-button.cart:hover {
+  background: linear-gradient(45deg, #fc4a03, #ce6007);
+  box-shadow: 0 0 15px #f85d03, 0 0 25px rgba(255, 72, 0, 0.7);
+}
 .sci-fi-button.cancel {
   background: linear-gradient(45deg, #ff4b2b, #ff416c);
 }
 .sci-fi-button.success {
   background: linear-gradient(45deg, #04700d, #1fdd19);
+}
+.sci-fi-button.cart {
+  background: linear-gradient(45deg, #f76f00, #e2a702);
 }
 
 /* Modal overlay and modal content styles */

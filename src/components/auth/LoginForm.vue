@@ -27,7 +27,6 @@ const error = ref('');
 const handleLogin = async () => {
   try {
     await authStore.login(username.value, password.value);
-    // router.push('/home');
     toast.info("Logged In Sucessfully!");
     } catch (err: any) {
     toast.info("Invalid Credentials!");
