@@ -3,12 +3,13 @@
         <h2>Item Details</h2>
         <div>
             <div v-if="item.image_url">
-                <!-- <strong>Image:</strong> -->
                 <img :src="item.image_url" alt="Item Image" class="item-image" />
             </div>
             <h2> {{ item.name }}</h2>
             <span>Price: {{ parseFloat(item.price).toFixed(0) }}💸</span>
-            <div><hr></div>
+            <div>
+                <hr>
+            </div>
             <span> {{ item.description }}</span>
         </div>
         <button type="button" class="sci-fi-button cancel" @click="emitClose">Close</button>
@@ -19,17 +20,13 @@
 import { ref, onMounted } from 'vue';
 import { useItemsStore } from '../../store/itemsStore';
 
-// Props
 const props = defineProps<{ itemId: number }>();
 
-// Emits
 const emit = defineEmits<{ (e: 'close'): void }>();
 
-// Store
 const store = useItemsStore();
 const item = ref({ name: '', description: '', price: '', image_url: null as string | null });
 
-// Fetch item data for viewing
 const fetchItemData = async () => {
     const fetchedItem = await store.getItemDetails(props.itemId);
     if (fetchedItem) {
@@ -40,7 +37,6 @@ const fetchItemData = async () => {
     }
 };
 
-// Emit close event
 const emitClose = () => {
     emit('close');
 };
@@ -80,5 +76,4 @@ onMounted(fetchItemData);
     cursor: pointer;
     margin-top: 20px;
 }
-
 </style>

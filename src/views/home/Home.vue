@@ -2,13 +2,14 @@
   <div>
     <Navbar />
     <ItemsTableVue />
+    <fileUpload/>
   </div>
 </template>
 
 <script setup lang="ts">
 import ItemsTableVue from '../../components/Items/ItemsGrid.vue';
 import Navbar from '../../components/navbar/Navbar.vue';
-
+import fileUpload from '../fileUpload.vue';
 </script>
 
 <style scoped>

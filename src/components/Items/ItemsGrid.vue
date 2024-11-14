@@ -2,7 +2,7 @@
   <div>
     <div class="top-bar">
       <h2>Items Gallery</h2>
-      <input type="text" v-model="searchParam" />
+      <input type="text" v-model="searchParam" placeholder="                   Search" />
       <button v-if="isAdmin" class="sci-fi-button topbar-button" @click="openCreateModal()">Create Item</button>
     </div>
     <div class="items-grid">
@@ -118,7 +118,6 @@ export default defineComponent({
     onMounted(fetchItems);
 
     return {
-      items,
       openDetailModal,
       openCreateModal,
       openEditModal,
@@ -126,6 +125,7 @@ export default defineComponent({
       closeModals,
       closeDeleteModal,
       confirmDelete,
+      items,
       isCreating,
       isEditing,
       isViewing,
