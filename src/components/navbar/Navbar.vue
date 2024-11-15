@@ -55,6 +55,10 @@ export default defineComponent({
     top: 0;
     z-index: 1000;
     font-family: 'Orbitron', sans-serif;
+    max-width: 1200px; /* Set a maximum width for the navbar */
+    gap: 288px;
+    width: 100%; /* Ensures it spans across full width until the max-width */
+    margin: 0 auto; /* Centers the navbar horizontally */
 }
 
 .sci-fi-navbar .logo {
@@ -125,6 +129,7 @@ export default defineComponent({
     background: linear-gradient(45deg, #ff416c, #ff4b2b);
     box-shadow: 0 0 15px #ff416c, 0 0 25px rgba(255, 65, 108, 0.7);
 }
+
 .sci-fi-button.login-btn {
     padding: 10px 20px;
     border: none;
@@ -141,4 +146,5 @@ export default defineComponent({
     background: linear-gradient(45deg, #00d2ff, #3a0ca3);
     box-shadow: 0 0 15px #00d2ff, 0 0 25px rgba(13, 221, 248, 0.7);
 }
+
 </style>
