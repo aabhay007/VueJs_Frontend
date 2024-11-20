@@ -2,7 +2,7 @@
   <div>
     <div class="top-bar">
       <h2>Items Gallery</h2>
-      <input type="text" v-model="searchParam" placeholder="                   Search" />
+      <input type="text" v-model="searchParam" placeholder="                   Search" @keydown.enter="onSearch" />
       <button v-if="isAdmin" class="sci-fi-button topbar-button" @click="openCreateModal()">Create Item</button>
     </div>
     <div class="items-grid">
@@ -71,9 +71,15 @@ export default defineComponent({
     };
 
     watch(searchParam, () => {
+      if(searchParam.value==''){
       fetchItems();
+    }
     });
 
+    const onSearch = () => {
+      fetchItems(); 
+    };
+    
     const openDetailModal = (id: number) => {
       selectedItemId.value = id;
       isViewing.value = true;
@@ -125,6 +131,7 @@ export default defineComponent({
       closeModals,
       closeDeleteModal,
       confirmDelete,
+      onSearch,
       items,
       isCreating,
       isEditing,
@@ -159,6 +166,7 @@ th {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 1270px;
 }
 
 .topbar-button {

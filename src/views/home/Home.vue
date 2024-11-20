@@ -1,9 +1,9 @@
-<template>
-  <div>
-    <Navbar />
-    <ItemsTableVue class="body-content" />
-  </div>
-</template>
+  <template>
+    <div>
+      <Navbar />
+      <ItemsTableVue class="body-content" />
+    </div>
+  </template>
 
 <script setup lang="ts">
 import ItemsTableVue from '../../components/Items/ItemsGrid.vue';
