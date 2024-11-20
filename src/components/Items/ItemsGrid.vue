@@ -28,7 +28,7 @@
     </div>
 
     <!-- Modals for Edit, Detail, and Delete Confirmation -->
-    <div v-if="isCreating || isEditing || isViewing || isDeleting" class="modal-overlay" @click.self="closeModals">
+    <div v-if="isCreating || isEditing || isViewing || isDeleting" class="modal-overlay" >
       <CreateItem v-if="isCreating" @close="closeModals" />
       <EditItem v-if="isEditing" :itemId="selectedItemId" @close="closeModals" />
       <ItemDetail v-if="isViewing" :itemId="selectedItemId" @close="closeModals" />
@@ -40,7 +40,6 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, watch } from "vue";
 import { useItemsStore } from "../../store/itemsStore";
-// import debounce from "lodash";
 import CreateItem from '../../components/Items/CreateItems.vue';
 import EditItem from "./EditItems.vue";
 import ItemDetail from "./ItemDetail.vue";
