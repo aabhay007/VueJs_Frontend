@@ -1,7 +1,7 @@
   <template>
     <div>
       <Navbar />
-      <ItemsTableVue class="body-content" />
+      <ItemsTableVue/>
     </div>
   </template>
 
@@ -11,14 +11,6 @@ import Navbar from '../../components/navbar/Navbar.vue';
 </script>
 
 <style scoped>
-.body-content {
-  margin-top: 8%;
-  position: absolute;
-  top: 0;
-  left: 16%;
-  max-width: 100%;
-}
-
 .sci-fi-button {
   width: 100%;
   padding: 12px;

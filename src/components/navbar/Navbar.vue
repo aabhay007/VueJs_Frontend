@@ -51,14 +51,14 @@ export default defineComponent({
     padding: 16px 32px;
     background-color: #0a0a0a;
     box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
-    position: fixed;
-    top: 10px;
-    left: 16.5%;
+    position: sticky;
+    top: 0;
     z-index: 1000;
     font-family: 'Orbitron', sans-serif;
-    max-width: 1200px; 
+    max-width: 1200px; /* Set a maximum width for the navbar */
     gap: 288px;
-    width: 100%; 
+    width: 100%; /* Ensures it spans across full width until the max-width */
+    margin: 0 auto; /* Centers the navbar horizontally */
 }
 
 .sci-fi-navbar .logo {
