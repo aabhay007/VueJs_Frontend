@@ -55,8 +55,6 @@ export default defineComponent({
     top: 0;
     z-index: 1000;
     font-family: 'Orbitron', sans-serif;
-    max-width: 1200px; /* Set a maximum width for the navbar */
-    gap: 288px;
     width: 100%; /* Ensures it spans across full width until the max-width */
     margin: 0 auto; /* Centers the navbar horizontally */
 }

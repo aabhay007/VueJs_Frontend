@@ -243,10 +243,10 @@ th {
 
 .items-grid {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   max-width: 100%;
   flex-wrap: wrap;
-  gap: 30px;
+  /* gap: 30px; */
 }
 
 .item-card {
