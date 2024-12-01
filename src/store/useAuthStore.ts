@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('auth', {
     logout() {
       Cookies.remove('accessToken');
       Cookies.remove('refreshToken');
-      router.go(0);
+      router.push('/');
     },
 
     // Token refresh action

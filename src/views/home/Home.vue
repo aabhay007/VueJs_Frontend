@@ -2,12 +2,15 @@
     <div>
       <Navbar />
       <ItemsTableVue/>
+      <!-- <cart/> -->
     </div>
   </template>
 
 <script setup lang="ts">
 import ItemsTableVue from '../../components/Items/ItemsGrid.vue';
 import Navbar from '../../components/navbar/Navbar.vue';
+
+// import Cart from '../../components/cart/Cart.vue'
 </script>
 
 <style scoped>

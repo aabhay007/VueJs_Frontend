@@ -2,7 +2,7 @@
   <div>
     <div class="top-bar">
       <h2>Items Gallery</h2>
-      <input type="text" v-model="searchParam" placeholder="                   Search" @keydown.enter="onSearch" />
+      <input type="text" v-model="searchParam" placeholder="Search" @keydown.enter="onSearch" />
       <button v-if="isAdmin" class="sci-fi-button topbar-button" @click="openCreateModal()">Create Item</button>
     </div>
     <div class="items-grid">
@@ -21,7 +21,7 @@
           </div>
           <div v-else class="action-buttons">
             <button class="sci-fi-button" @click="openDetailModal(item.id)">View</button>
-            <button class="sci-fi-button cart" @click="openDetailModal(item.id)">Add To Cart</button>
+            <button class="sci-fi-button cart" @click="addToCart(item.id)">Add To Cart</button>
           </div>
         </div>
       </div>
@@ -45,6 +45,10 @@ import EditItem from "./EditItems.vue";
 import ItemDetail from "./ItemDetail.vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
 import isSuperUser from "../../services/jwt/checkUserRole";
+import { useCartStore } from "../../store/cartStore";
+import Cookies from "js-cookie";
+import router from '../../router';
+import toast from '../../services/toaster/toast';
 
 export default defineComponent({
   components: {
@@ -55,6 +59,7 @@ export default defineComponent({
   },
   setup() {
     const store = useItemsStore();
+    const cartStore = useCartStore();
     const items = ref();
     const isCreating = ref(false);
     const isEditing = ref(false);
@@ -63,6 +68,7 @@ export default defineComponent({
     const selectedItemId = ref(0);
     const isAdmin = isSuperUser();
     const searchParam = ref('');
+    const isLoggedIn = Cookies.get("accessToken");
 
     const fetchItems = async () => {
       await store.fetchItems(searchParam.value);
@@ -98,6 +104,16 @@ export default defineComponent({
       isDeleting.value = true;
     };
 
+    const addToCart = async (id: number) => {
+      if(isLoggedIn){
+        await cartStore.addToCart(id);
+      }
+      else{
+        toast.info("Login Required!");
+        router.push('/login');
+      }
+    };
+
     const closeModals = () => {
       isCreating.value = false;
       isViewing.value = false;
@@ -131,6 +147,7 @@ export default defineComponent({
       closeDeleteModal,
       confirmDelete,
       onSearch,
+      addToCart,
       items,
       isCreating,
       isEditing,
