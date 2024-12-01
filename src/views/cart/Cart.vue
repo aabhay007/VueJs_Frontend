@@ -8,7 +8,7 @@
       <div v-if="cartItems && cartItems.length" class="items-grid">
         <div v-for="item in cartItems" :key="item.id" class="item-card">
           <div class="item-image">
-            <img v-if="item.image_url" :src="item.image_url" alt="Item Image" />
+            <img v-if="item.item_image_url" :src="item.item_image_url" alt="Item Image" />
             <span v-else>No image available</span>
           </div>
           <div class="item-info">

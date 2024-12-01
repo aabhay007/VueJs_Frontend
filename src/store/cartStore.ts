@@ -9,6 +9,7 @@ interface CartItem {
   item_name: string;
   quantity: number;
   added_at: string;
+  item_image_url:String;
 }
 
 interface Cart {

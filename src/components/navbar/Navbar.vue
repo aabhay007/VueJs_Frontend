@@ -78,6 +78,7 @@ export default defineComponent({
   font-family: "Orbitron", sans-serif;
   width: 100%; /* Ensures it spans across full width until the max-width */
   margin: 0 auto; /* Centers the navbar horizontally */
+  border-radius: 10px;
 }
 
 .sci-fi-navbar .logo {

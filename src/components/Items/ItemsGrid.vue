@@ -185,6 +185,8 @@ th {
 }
 .top-bar input{
   padding: 5px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px #00d2ff, 0 0 10px rgba(0, 210, 255, 0.7);
 }
 
 
