@@ -2,9 +2,9 @@
   <nav class="sci-fi-navbar">
     <h1 class="logo">wizstore</h1>
     <ul v-if="isAdmin" class="nav-links">
-      <li><a href="/dashboard">Admin</a></li>
+      <li><a href="/">Admin</a></li>
       <li><a @click="goToCart()">Cart</a></li>
-      <li><a href="/services">Services</a></li>
+      <li><a href="/dashboard">Dashboard</a></li>
       <li><a href="/contact">Contact</a></li>
     </ul>
     <ul v-else class="nav-links">
