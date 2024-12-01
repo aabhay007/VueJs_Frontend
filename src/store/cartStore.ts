@@ -5,11 +5,7 @@ import axiosInstance from '../services/jwt/interceptor';
 // Define types for cart item and cart
 interface CartItem {
   id: number;
-  item: {
-    id: number;
-    name: string;
-    price: number;
-  };
+  item_price: number;
   item_name: string;
   quantity: number;
   added_at: string;
@@ -30,10 +26,9 @@ export const useCartStore = defineStore('cart', {
   }),
 
   getters: {
-    // Calculate the total price
     totalPrice: (state): number => {
       return state.cartItems.reduce((total, item) => {
-        return total + item.item.price * item.quantity;
+        return total + item.item_price * item.quantity;
       }, 0);
     },
   },
@@ -43,8 +38,8 @@ export const useCartStore = defineStore('cart', {
     async fetchCartItems(): Promise<void> {
       this.loading = true;
       try {
-        const response = await axiosInstance.get<Cart>(`/cart`);
-        this.cartItems = response.data.items; // Assuming `items` is the key in the API response
+        const response = await axiosInstance.get<Cart>(`cart/`);
+        this.cartItems = response.data.items; 
       } catch (error) {
         toast.error("Error fetching cart items!");
         console.error(error);
@@ -56,15 +51,15 @@ export const useCartStore = defineStore('cart', {
     // Add item to cart
     async addToCart(itemId: number, quantity = 1): Promise<void> {
       try {
-        const response = await axiosInstance.post<CartItem>(`/cart/add/`, { item_id: itemId, quantity });
+        const response = await axiosInstance.post<CartItem>(`cart/add/`, { item_id: itemId, quantity });
         const addedItem = response.data;
 
         // Update local cart state
         const existingItem = this.cartItems.find((item) => item.id === addedItem.id);
         if (existingItem) {
-          existingItem.quantity = addedItem.quantity; // Update quantity if item already exists
+          existingItem.quantity = addedItem.quantity; 
         } else {
-          this.cartItems.push(addedItem); // Add new item to cart
+          this.cartItems.push(addedItem); 
         }
         toast.success("Item added to cart!");
       } catch (error) {
@@ -76,7 +71,7 @@ export const useCartStore = defineStore('cart', {
     // Update item quantity
     async updateCartItem(cartItemId: number, quantity: number): Promise<void> {
       try {
-        const response = await axiosInstance.put<CartItem>(`/cart/item/${cartItemId}/`, { quantity });
+        const response = await axiosInstance.put<CartItem>(`cart/item/${cartItemId}/`, { quantity });
         const updatedItem = response.data;
 
         // Update local cart state
@@ -84,7 +79,7 @@ export const useCartStore = defineStore('cart', {
         if (itemIndex !== -1) {
           this.cartItems[itemIndex].quantity = updatedItem.quantity;
         }
-        toast.success("Cart item updated successfully!");
+        // toast.success("Cart item updated successfully!");
       } catch (error) {
         toast.error("Error updating cart item!");
         console.error(error);
@@ -94,11 +89,11 @@ export const useCartStore = defineStore('cart', {
     // Delete an item from the cart
     async deleteCartItem(cartItemId: number): Promise<void> {
       try {
-        await axiosInstance.delete(`/cart/item/${cartItemId}/`);
+        await axiosInstance.delete(`cart/item/${cartItemId}/`);
 
         // Remove item from local cart state
         this.cartItems = this.cartItems.filter((item) => item.id !== cartItemId);
-        toast.success("Item removed from cart!");
+        toast.info("Item removed from cart!");
       } catch (error) {
         toast.error("Error removing cart item!");
         console.error(error);

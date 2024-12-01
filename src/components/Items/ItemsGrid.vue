@@ -2,7 +2,7 @@
   <div>
     <div class="top-bar">
       <h2>Items Gallery</h2>
-      <input type="text" v-model="searchParam" placeholder="Search" @keydown.enter="onSearch" />
+      <input type="text" v-model="searchParam" placeholder="Search Items..." @keydown.enter="onSearch" />
       <button v-if="isAdmin" class="sci-fi-button topbar-button" @click="openCreateModal()">Create Item</button>
     </div>
     <div class="items-grid">
@@ -183,6 +183,10 @@ th {
   justify-content: space-between;
   align-items: center;
 }
+.top-bar input{
+  padding: 5px;
+}
+
 
 .topbar-button {
   height: fit-content;

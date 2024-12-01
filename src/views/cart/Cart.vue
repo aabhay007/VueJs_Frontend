@@ -8,13 +8,13 @@
       <div v-if="cartItems && cartItems.length" class="items-grid">
         <div v-for="item in cartItems" :key="item.id" class="item-card">
           <div class="item-image">
-            <img v-if="item.item.image_url" :src="item.item.image_url" alt="Item Image" />
+            <img v-if="item.image_url" :src="item.image_url" alt="Item Image" />
             <span v-else>No image available</span>
           </div>
           <div class="item-info">
             <h3>{{ item.item_name }}</h3>
-            <p>{{ parseFloat(item.item.price).toFixed(0) }}💸 x {{ item.quantity }}</p>
-            <p><strong>Total: {{ (item.item.price * item.quantity).toFixed(2) }}💸</strong></p>
+            <p>{{ parseFloat(item.item_price).toFixed(0) }}💸 x {{ item.quantity }}</p>
+            <p><strong>Total: {{ (item.item_price * item.quantity).toFixed(2) }}💸</strong></p>
             <div class="action-buttons">
               <button class="sci-fi-button" @click="updateQuantity(item.id, item.quantity + 1)">+</button>
               <button class="sci-fi-button" @click="updateQuantity(item.id, item.quantity - 1)" :disabled="item.quantity === 1">-</button>
@@ -36,7 +36,7 @@
   </template>
   
   <script lang="ts">
-  import { defineComponent, onMounted, ref } from "vue";
+  import { defineComponent, onMounted, ref, computed } from "vue";
 import Navbar from "../../components/navbar/Navbar.vue";
   import { useCartStore } from "../../store/cartStore";
   
@@ -45,7 +45,7 @@ import Navbar from "../../components/navbar/Navbar.vue";
     setup() {
       const cartStore = useCartStore();
       const cartItems = ref(cartStore.cartItems);
-  
+      const totalPrice = computed(() => cartStore.totalPrice);
       const fetchCartItems = async () => {
         await cartStore.fetchCartItems();
         cartItems.value = cartStore.cartItems;
@@ -54,7 +54,7 @@ import Navbar from "../../components/navbar/Navbar.vue";
       const updateQuantity = async (cartItemId: number, quantity: number) => {
         if (quantity > 0) {
           await cartStore.updateCartItem(cartItemId, quantity);
-          fetchCartItems();
+          // fetchCartItems();
         }
       };
   
@@ -64,7 +64,6 @@ import Navbar from "../../components/navbar/Navbar.vue";
       };
   
       const checkout = () => {
-        // Trigger checkout logic (e.g., navigate to checkout page)
         console.log("Checkout initiated!");
       };
   
@@ -75,7 +74,7 @@ import Navbar from "../../components/navbar/Navbar.vue";
         updateQuantity,
         removeItem,
         checkout,
-        totalPrice: cartStore.totalPrice,
+        totalPrice,
       };
     },
   });
