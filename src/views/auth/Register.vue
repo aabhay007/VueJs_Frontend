@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <RegisterForm />
+    <RegisterForm class="fade-in"/>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="app-layout">
         <Navbar />
-        <div class="content">
+        <div class="content fade-in">
             <UsersGrid />
         </div>
     </div>

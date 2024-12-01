@@ -43,7 +43,7 @@ const handleLogin = async () => {
   background: linear-gradient(to right, #302e6b, #78569b); */
 }
 .login-form {
-  max-width: 54%;
+  max-width: 35%;
   background: rgba(20, 20, 30, 0.9);
   padding: 20px 30px;
   border-radius: 10px;

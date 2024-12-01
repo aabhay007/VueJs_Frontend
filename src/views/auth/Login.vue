@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <LoginForm />
+    <LoginForm class="fade-in"/>
   </div>
 </template>
 
@@ -11,6 +11,6 @@ import LoginForm from '../../components/auth/LoginForm.vue';
 
 <style scoped>
 .content{
-  margin: 24% 8%;
+  margin: 15% 10%;
 }
 </style>

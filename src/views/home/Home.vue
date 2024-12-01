@@ -1,7 +1,7 @@
   <template>
-    <div>
+    <div >
       <Navbar />
-      <ItemsTableVue/>
+      <ItemsTableVue class="fade-in"/>
       <!-- <cart/> -->
     </div>
   </template>
