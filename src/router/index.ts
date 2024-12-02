@@ -7,6 +7,7 @@ import ItemsTable from '../components/Items/ItemsGrid.vue';
 import Dashboard from '../views/admin/Dashboard.vue';
 import Cart from '../views/cart/Cart.vue';
 import CheckOut from '../views/checkout/CheckOut.vue';
+import PaymentForm from '../components/payment/PaymentForm.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: Home},
@@ -16,6 +17,7 @@ const routes = [
   { path: '/dashboard', name: 'dashboard', component: Dashboard },
   { path: '/cart', name: 'cart', component: Cart },
   { path: '/checkout', name: 'checkout', component: CheckOut },
+  { path: '/payment', name: 'payment', component: PaymentForm },
 ];
 
 const router = createRouter({ 
