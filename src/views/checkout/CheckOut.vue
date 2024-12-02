@@ -24,6 +24,8 @@
         <h3>Order Summary</h3>
         <p>Total Items: {{ totalItems }}</p>
         <p>Total Amount: {{ totalAmount }}💸</p>
+
+        <!-- Button to trigger card form -->
         <button
           class="sci-fi-button success"
           :disabled="loading"
@@ -31,6 +33,17 @@
         >
           {{ loading ? "Processing Payment..." : "Proceed to Pay" }}
         </button>
+
+        <!-- New Button to Complete Payment -->
+        <button
+          v-if="showPaymentButton"
+          class="sci-fi-button secondary"
+          :disabled="loading"
+          @click="completePayment"
+        >
+          {{ loading ? "Processing Payment..." : "Complete Payment" }}
+        </button>
+
         <div v-if="paymentError" class="error-message">{{ paymentError }}</div>
       </div>
 
@@ -67,6 +80,7 @@ export default defineComponent({
 
     const loading = ref(false);
     const paymentError = ref<string | null>(null);
+    const showPaymentButton = ref(false); // Controls visibility of the "Complete Payment" button
 
     const stripeElements = ref<StripeElements | null>(null); // Initialize elements ref
 
@@ -98,25 +112,42 @@ export default defineComponent({
           const paymentElement = stripeElements.value.create("payment");
           paymentElement.mount("#card-element"); // Mount it to the div in the template
 
-          // Now, confirm payment with the payment element
-          const { error } = await paymentStore.stripe.confirmPayment({
-            elements: stripeElements.value, // Pass initialized elements
-            confirmParams: {
-              return_url: "http://localhost:3000/", // Update to your success URL
-            },
-          });
+          // Now show the "Complete Payment" button after the user enters card details
+          showPaymentButton.value = true; // Show the "Complete Payment" button
 
-          if (error) {
-            throw new Error(
-              error.message || "Payment failed. Please try again."
-            );
-          } else {
-            toast.success("Payment successful! Redirecting...");
-            cartStore.clearCart(); // Clear cart after success
-            window.location.href = "/success"; // Redirect to success page
-          }
         } else {
           throw new Error("Stripe initialization or client secret missing.");
+        }
+      } catch (error: any) {
+        paymentError.value =
+          error.message || "An error occurred during payment.";
+        toast.error(paymentError.value);
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    const completePayment = async () => {
+      loading.value = true;
+      paymentError.value = null;
+
+      try {
+        // Confirm payment with the payment element
+        const { error } = await paymentStore.stripe.confirmPayment({
+          elements: stripeElements.value, // Pass initialized elements
+          confirmParams: {
+            return_url: "http://localhost:3000/", // Update to your success URL
+          },
+        });
+
+        if (error) {
+          throw new Error(
+            error.message || "Payment failed. Please try again."
+          );
+        } else {
+          toast.success("Payment successful! Redirecting...");
+          cartStore.clearCart(); // Clear cart after success
+          window.location.href = "/success"; // Redirect to success page
         }
       } catch (error: any) {
         paymentError.value =
@@ -138,13 +169,16 @@ export default defineComponent({
       totalAmount,
       totalItems,
       onCheckout,
+      completePayment,
       goBackToShop,
       loading,
       paymentError,
+      showPaymentButton, // Bind the visibility of the payment button
     };
   },
 });
 </script>
+
 
 <style scoped>
 .checkout-container {
