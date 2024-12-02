@@ -6,6 +6,7 @@ import Register from '../views/auth/Register.vue';
 import ItemsTable from '../components/Items/ItemsGrid.vue';
 import Dashboard from '../views/admin/Dashboard.vue';
 import Cart from '../views/cart/Cart.vue';
+import CheckOut from '../views/checkout/CheckOut.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: Home},
@@ -14,6 +15,7 @@ const routes = [
   { path: '/items-list', name: 'Items', component: ItemsTable },
   { path: '/dashboard', name: 'dashboard', component: Dashboard },
   { path: '/cart', name: 'cart', component: Cart },
+  { path: '/checkout', name: 'checkout', component: CheckOut },
 ];
 
 const router = createRouter({ 
