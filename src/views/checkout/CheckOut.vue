@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <navbar />
+  <navbar />
+  <div class="fade-in">
     <div class="top-bar">
       <h2>Checkout</h2>
     </div>

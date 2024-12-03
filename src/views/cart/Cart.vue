@@ -39,6 +39,7 @@
   import { defineComponent, onMounted, ref, computed } from "vue";
 import Navbar from "../../components/navbar/Navbar.vue";
   import { useCartStore } from "../../store/cartStore";
+import router from "../../router";
   
   export default defineComponent({
   components: { Navbar },
@@ -64,7 +65,7 @@ import Navbar from "../../components/navbar/Navbar.vue";
       };
   
       const checkout = () => {
-        console.log("Checkout initiated!");
+        router.push("/checkout");
       };
   
       onMounted(fetchCartItems);
