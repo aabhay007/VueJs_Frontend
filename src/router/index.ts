@@ -8,6 +8,9 @@ import Dashboard from '../views/admin/Dashboard.vue';
 import Cart from '../views/cart/Cart.vue';
 import CheckOut from '../views/checkout/CheckOut.vue';
 import PaymentForm from '../components/payment/PaymentForm.vue';
+import Contacts from '../views/contact/Contacts.vue';
+import Services from '../views/services/Services.vue';
+import ContactMessage from '../views/admin/ContactMessage.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: Home},
@@ -18,6 +21,9 @@ const routes = [
   { path: '/cart', name: 'cart', component: Cart },
   { path: '/checkout', name: 'checkout', component: CheckOut },
   { path: '/payment', name: 'payment', component: PaymentForm },
+  { path: '/contact', name: 'contact', component:Contacts  },
+  { path: '/services', name: 'service', component:Services  },
+  { path: '/contact-messages', name: 'messages', component:ContactMessage  },
 ];
 
 const router = createRouter({ 

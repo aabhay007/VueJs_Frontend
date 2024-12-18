@@ -2,16 +2,15 @@
   <nav class="sci-fi-navbar">
     <h1 class="logo">wizstore</h1>
     <ul v-if="isAdmin" class="nav-links">
-      <li><a href="/">Admin</a></li>
-      <li><a @click="goToCart()">Cart</a></li>
-      <li><a href="/dashboard">Dashboard</a></li>
-      <li><a href="/contact">Contact</a></li>
+      <li><a @click="goTohome()">Home</a></li>
+      <li><a @click="goTodashboard()">Dashboard</a></li>
+      <li><a @click="goToMessages()">Messages</a></li>
     </ul>
     <ul v-else class="nav-links">
-      <li><a href="/">Home</a></li>
+      <li><a @click="goTohome()">Home</a></li>
       <li><a @click="goToCart()">Cart</a></li>
-      <li><a href="/services">Services</a></li>
-      <li><a href="/contact">Contact</a></li>
+      <li><a @click="goToServices()">Services</a></li>
+      <li><a @click="goToContact()">Contact</a></li>
     </ul>
     <button
       v-if="isLoggedIn"
@@ -53,12 +52,38 @@ export default defineComponent({
             router.push("/login");
         }
     };
+    const goTohome=()=>{
+      router.push("/");
+    }
+    const goToServices=()=>{
+      router.push("/services");
+    }
+    const goToContact=()=>{
+      if(isLoggedIn){
+            router.push("/contact");
+        }
+        else{
+            toast.info("You are not logged in");
+            router.push("/login");
+        }
+    }
+    const goToMessages=()=>{
+      router.push("/contact-messages");
+    }
+    const goTodashboard=()=>{
+      router.push("/dashboard");
+    }
     return {
       authStore,
       isAdmin,
       isLoggedIn,
       goToCart,
       goToLogin,
+      goTohome,
+      goToServices,
+      goToContact,
+      goToMessages,
+      goTodashboard
     };
   },
 });
