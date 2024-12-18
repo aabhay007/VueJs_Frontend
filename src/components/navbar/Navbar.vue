@@ -2,15 +2,15 @@
   <nav class="sci-fi-navbar">
     <h1 class="logo">wizstore</h1>
     <ul v-if="isAdmin" class="nav-links">
-      <li><a @click="goTohome()">Home</a></li>
-      <li><a @click="goTodashboard()">Dashboard</a></li>
-      <li><a @click="goToMessages()">Messages</a></li>
+      <li><span @click="goTohome()">Home</span></li>
+      <li><span @click="goTodashboard()">Dashboard</span></li>
+      <li><span @click="goToMessages()">Messages</span></li>
     </ul>
     <ul v-else class="nav-links">
-      <li><a @click="goTohome()">Home</a></li>
-      <li><a @click="goToCart()">Cart</a></li>
-      <li><a @click="goToServices()">Services</a></li>
-      <li><a @click="goToContact()">Contact</a></li>
+      <li><span @click="goTohome()">Home</span></li>
+      <li><span @click="goToCart()">Cart</span></li>
+      <li><span @click="goToServices()">Services</span></li>
+      <li><span @click="goToContact()">Contact</span></li>
     </ul>
     <button
       v-if="isLoggedIn"
@@ -120,7 +120,7 @@ export default defineComponent({
   gap: 24px;
 }
 
-.sci-fi-navbar .nav-links li a {
+.sci-fi-navbar .nav-links li span {
   color: #ffffff;
   font-size: 1.1em;
   text-decoration: none;
@@ -129,12 +129,12 @@ export default defineComponent({
   transition: color 0.3s ease;
 }
 
-.sci-fi-navbar .nav-links li a:hover {
+.sci-fi-navbar .nav-links li span:hover {
   color: #00d2ff;
 }
 
-.sci-fi-navbar .nav-links li a::before,
-.sci-fi-navbar .nav-links li a::after {
+.sci-fi-navbar .nav-links li span::before,
+.sci-fi-navbar .nav-links li span::after {
   content: "";
   position: absolute;
   width: 0;
@@ -143,18 +143,18 @@ export default defineComponent({
   transition: width 0.3s ease;
 }
 
-.sci-fi-navbar .nav-links li a::before {
+.sci-fi-navbar .nav-links li span::before {
   top: 0;
   left: 0;
 }
 
-.sci-fi-navbar .nav-links li a::after {
+.sci-fi-navbar .nav-links li span::after {
   bottom: 0;
   right: 0;
 }
 
-.sci-fi-navbar .nav-links li a:hover::before,
-.sci-fi-navbar .nav-links li a:hover::after {
+.sci-fi-navbar .nav-links li span:hover::before,
+.sci-fi-navbar .nav-links li span:hover::after {
   width: 100%;
 }
 
